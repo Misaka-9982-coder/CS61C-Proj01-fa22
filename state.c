@@ -282,23 +282,13 @@ static void update_head(game_state_t* state, unsigned int snum) {
   unsigned int head_col = snake->head_col;
   char head = state->board[head_row][head_col];
 
-  unsigned int next_row = 0;
-  unsigned int next_col = 0;
+  unsigned int next_row = get_next_row(head_row, head);
+  unsigned int next_col = get_next_col(head_col, head);
 
   char body = head_to_body(head);
 
-  char *direction = "WASD";
-  int dx[] = {0, -1, 0, 1};
-  int dy[] = {-1, 0, 1, 0};
-  for (int i = 0; i < strlen(direction); i ++ ) {
-    if(head == direction[i]) {
-      next_row = head_row + dy[i];
-      next_col = head_col + dx[i];
-      state->board[next_row][next_col] = head;
-      state->board[head_row][head_col] = body;
-      break;
-    }
-  }
+  state->board[next_row][next_col] = head;
+  state->board[head_row][head_col] = body;
 
   snake->head_row = next_row;
   snake->head_col = next_col;
