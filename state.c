@@ -374,7 +374,7 @@ game_state_t* load_board(char* filename) {
 
   game_state_t* game_state = malloc(sizeof(game_state_t));
 
-  char buff[255][255];
+  char buff[1000][1000];
   int cnt = 0;
 
   while(!feof(fp)) {
@@ -414,6 +414,7 @@ static void find_head(game_state_t* state, unsigned int snum) {
     cur_row = get_next_row(cur_row, cur_char);
     cur_col = get_next_col(cur_col, cur_char);
     cur_char = state->board[cur_row][cur_col];
+    // printf("row: %d, col: %d, char: %c\n", cur_row, cur_col, cur_char);
   }
 
   snake->head_row = cur_row;
@@ -430,8 +431,8 @@ game_state_t* initialize_snakes(game_state_t* state) {
   }
 
   unsigned int snake_num = 0;
-  unsigned int *tail_rows = malloc(sizeof(unsigned int));
-  unsigned int *tail_cols = malloc(sizeof(unsigned int));
+  unsigned int *tail_rows = malloc(sizeof(unsigned int) * 1000);
+  unsigned int *tail_cols = malloc(sizeof(unsigned int) * 1000);
 
   for (int i = 0; i < state->num_rows; i ++ ) {
     for(int j = 0; j < strlen(state->board[i]); j ++ ) {
