@@ -308,6 +308,23 @@ static void update_head(game_state_t* state, unsigned int snum) {
 */
 static void update_tail(game_state_t* state, unsigned int snum) {
   // TODO: Implement this function.
+  snake_t *snake = &state->snakes[snum];
+  unsigned int tail_row = snake->tail_row;
+  unsigned int tail_col = snake->tail_col;
+  char tail = state->board[tail_row][tail_col];
+
+  unsigned int next_row = get_next_row(tail_row, tail);
+  unsigned int next_col = get_next_col(tail_col, tail);
+  
+  char body_next_to_tail = state->board[next_row][next_col];
+  char next_tail = body_to_tail(body_next_to_tail);
+
+  state->board[next_row][next_col] = next_tail;
+  state->board[tail_row][tail_col] = ' ';
+
+  snake->tail_row = next_row;
+  snake->tail_col = next_col;
+
   return;
 }
 
