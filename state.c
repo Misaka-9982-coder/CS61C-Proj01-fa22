@@ -39,11 +39,11 @@ game_state_t* create_default_state() {
   game_state->board = malloc(sizeof(char*) * game_state->num_rows);
   for(int i = 0; i < game_state->num_rows; i ++ ) {
     game_state->board[i] = malloc(sizeof(char) * 21);
-    strcpy(game_state->board[i], "#                  #\n");
+    strcpy(game_state->board[i], "#                  #");
   }
-  strcpy(game_state->board[0], "####################\n");
-  strcpy(game_state->board[2], "# d>D    *         #\n");
-  strcpy(game_state->board[17], "####################\n");
+  strcpy(game_state->board[0], "####################");
+  strcpy(game_state->board[2], "# d>D    *         #");
+  strcpy(game_state->board[17], "####################");
   
   return game_state;
 }
@@ -54,6 +54,7 @@ void free_state(game_state_t* state) {
   for (int i = 0; i < state->num_rows; i ++ ) {
     free(state->board[i]);
   }
+  free(state->board);
   free(state->snakes);
   free(state);
   return;
