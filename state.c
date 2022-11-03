@@ -243,7 +243,25 @@ static unsigned int get_next_col(unsigned int cur_col, char c) {
 */
 static char next_square(game_state_t* state, unsigned int snum) {
   // TODO: Implement this function.
-  return '?';
+  snake_t snake = state->snakes[snum];
+  unsigned int head_row = snake.head_row;
+  unsigned int head_col = snake.head_col;
+  char head = state->board[head_row][head_col];
+  char next_square = '?';
+
+  char *direction = "WASD";
+  int dx[] = {0, -1, 0, 1};
+  int dy[] = {-1, 0, 1, 0};
+  for (int i = 0; i < strlen(direction); i ++ ) {
+    if(head == direction[i]) {
+      unsigned int next_row = head_row + dy[i];
+      unsigned int next_col = head_col + dx[i];
+      next_square = state->board[next_row][next_col];
+      break;
+    }
+  }
+
+  return next_square;
 }
 
 /*
