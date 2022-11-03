@@ -104,7 +104,13 @@ static void set_board_at(game_state_t* state, unsigned int row, unsigned int col
 */
 static bool is_tail(char c) {
   // TODO: Implement this function.
-  return true;
+  char *judge = "wasd";
+  for(int i = 0; i < strlen(judge); i ++ ) {
+    if (c == judge[i]) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /*
@@ -114,7 +120,13 @@ static bool is_tail(char c) {
 */
 static bool is_head(char c) {
   // TODO: Implement this function.
-  return true;
+  char *judge = "WASD";
+  for(int i = 0; i < strlen(judge); i ++ ) {
+    if (c == judge[i]) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /*
@@ -123,7 +135,13 @@ static bool is_head(char c) {
 */
 static bool is_snake(char c) {
   // TODO: Implement this function.
-  return true;
+  char *judge = "wasd^<v>WASDx";
+  for(int i = 0; i < strlen(judge); i ++ ) {
+    if (c == judge[i]) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /*
@@ -133,7 +151,15 @@ static bool is_snake(char c) {
 */
 static char body_to_tail(char c) {
   // TODO: Implement this function.
-  return '?';
+  char *tails = "wasd";
+  char *bodys = "^<v>";
+  for (int i = 0; i < strlen(bodys); i ++ ) {
+    if(c == bodys[i]) {
+      c = tails[i];
+      break;
+    }
+  }
+  return c;
 }
 
 /*
@@ -143,7 +169,15 @@ static char body_to_tail(char c) {
 */
 static char head_to_body(char c) {
   // TODO: Implement this function.
-  return '?';
+  char *heads = "WASD";
+  char *bodys = "^<v>";
+  for (int i = 0; i < strlen(heads); i ++ ) {
+    if(c == heads[i]) {
+      c = bodys[i];
+      break;
+    }
+  }
+  return c;
 }
 
 /*
@@ -153,6 +187,23 @@ static char head_to_body(char c) {
 */
 static unsigned int get_next_row(unsigned int cur_row, char c) {
   // TODO: Implement this function.
+  char *increase = "vsS";
+  char *decrease = "^wW";
+  
+  for(int i = 0; i < strlen(increase); i ++ ) {
+    if(c == increase[i]) {
+      cur_row ++ ;
+      return cur_row;
+    }
+  }
+
+  for(int i = 0; i < strlen(decrease); i ++ ) {
+    if(c == decrease[i]) {
+      cur_row -- ;
+      break;
+    }
+  }
+  
   return cur_row;
 }
 
@@ -163,6 +214,23 @@ static unsigned int get_next_row(unsigned int cur_row, char c) {
 */
 static unsigned int get_next_col(unsigned int cur_col, char c) {
   // TODO: Implement this function.
+  char *increase = ">dD";
+  char *decrease = "<aA";
+
+  for(int i = 0; i < strlen(increase); i ++ ) {
+    if(c == increase[i]) {
+      cur_col ++ ;
+      return cur_col;
+    }
+  }
+
+  for(int i = 0; i < strlen(decrease); i ++ ) {
+    if(c == decrease[i]) {
+      cur_col -- ;
+      break;
+    }
+  }
+
   return cur_col;
 }
 
