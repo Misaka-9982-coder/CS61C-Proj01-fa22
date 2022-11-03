@@ -277,6 +277,32 @@ static char next_square(game_state_t* state, unsigned int snum) {
 */
 static void update_head(game_state_t* state, unsigned int snum) {
   // TODO: Implement this function.
+  snake_t *snake = &state->snakes[snum];
+  unsigned int head_row = snake->head_row;
+  unsigned int head_col = snake->head_col;
+  char head = state->board[head_row][head_col];
+
+  unsigned int next_row = 0;
+  unsigned int next_col = 0;
+
+  char body = head_to_body(head);
+
+  char *direction = "WASD";
+  int dx[] = {0, -1, 0, 1};
+  int dy[] = {-1, 0, 1, 0};
+  for (int i = 0; i < strlen(direction); i ++ ) {
+    if(head == direction[i]) {
+      next_row = head_row + dy[i];
+      next_col = head_col + dx[i];
+      state->board[next_row][next_col] = head;
+      state->board[head_row][head_col] = body;
+      break;
+    }
+  }
+
+  snake->head_row = next_row;
+  snake->head_col = next_col;
+
   return;
 }
 
