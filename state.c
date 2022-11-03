@@ -405,6 +405,20 @@ game_state_t* load_board(char* filename) {
 */
 static void find_head(game_state_t* state, unsigned int snum) {
   // TODO: Implement this function.
+  snake_t* snake = &state->snakes[snum];
+  unsigned int cur_row = snake->tail_row;
+  unsigned int cur_col = snake->tail_col;
+  char cur_char = state->board[cur_row][cur_col];
+
+  while(!is_head(cur_char)) {
+    cur_row = get_next_row(cur_row, cur_char);
+    cur_col = get_next_col(cur_col, cur_char);
+    cur_char = state->board[cur_row][cur_col];
+  }
+
+  snake->head_row = cur_row;
+  snake->head_col = cur_col;
+
   return;
 }
 
