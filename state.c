@@ -366,7 +366,33 @@ void update_state(game_state_t* state, int (*add_food)(game_state_t* state)) {
 /* Task 5 */
 game_state_t* load_board(char* filename) {
   // TODO: Implement this function.
-  return NULL;
+  FILE *fp = NULL;
+  fp = fopen(filename, "r");
+  if(fp == NULL) {
+    return NULL;
+  }
+
+  game_state_t* game_state = malloc(sizeof(game_state_t));
+
+  char buff[255][255];
+  int cnt = 0;
+
+  while(!feof(fp)) {
+		fgets(buff[cnt], 255, fp);
+    cnt ++ ;
+	}
+
+  game_state->num_rows = cnt - 1;
+  game_state->board = malloc(sizeof(char*) * game_state->num_rows);
+
+  for(int i = 0; i < game_state->num_rows; i ++ ) {
+    int len = strlen(buff[i]);
+    game_state->board[i] = malloc(sizeof(char) * len);
+    strcpy(game_state->board[i], buff[i]);
+    game_state->board[i][len - 1] = '\0';
+  }
+
+  return game_state;
 }
 
 /*
