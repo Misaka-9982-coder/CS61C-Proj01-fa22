@@ -248,18 +248,9 @@ static char next_square(game_state_t* state, unsigned int snum) {
   unsigned int head_col = snake.head_col;
   char head = state->board[head_row][head_col];
   char next_square = '?';
-
-  char *direction = "WASD";
-  int dx[] = {0, -1, 0, 1};
-  int dy[] = {-1, 0, 1, 0};
-  for (int i = 0; i < strlen(direction); i ++ ) {
-    if(head == direction[i]) {
-      unsigned int next_row = head_row + dy[i];
-      unsigned int next_col = head_col + dx[i];
-      next_square = state->board[next_row][next_col];
-      break;
-    }
-  }
+  unsigned int next_row = get_next_row(head_row, head);
+  unsigned int next_col = get_next_col(head_col, head);
+  next_square = state->board[next_row][next_col];
 
   return next_square;
 }
@@ -331,9 +322,9 @@ static void update_tail(game_state_t* state, unsigned int snum) {
 /* Task 4.5 */
 void update_state(game_state_t* state, int (*add_food)(game_state_t* state)) {
   // TODO: Implement this function.
-  int snum = state->num_snakes;
+  unsigned int snum = state->num_snakes;
 
-  for(int i = 0; i < snum; i ++ ) {
+  for(unsigned int i = 0; i < snum; i ++ ) {
     snake_t *snake = &state->snakes[i];
     
     bool is_alive = snake->live;
@@ -375,7 +366,7 @@ game_state_t* load_board(char* filename) {
   game_state_t* game_state = malloc(sizeof(game_state_t));
 
   char *buff = malloc(1024 * 1024 * sizeof(char));
-  int cnt = 0;
+  unsigned int cnt = 0;
   while(!feof(fp)) {
     fgets(buff, 1024 * 1024, fp);
 	  cnt ++ ;
@@ -436,8 +427,8 @@ game_state_t* initialize_snakes(game_state_t* state) {
   unsigned int *tail_rows = malloc(sizeof(unsigned int) * 1000);
   unsigned int *tail_cols = malloc(sizeof(unsigned int) * 1000);
 
-  for (int i = 0; i < state->num_rows; i ++ ) {
-    for(int j = 0; j < strlen(state->board[i]); j ++ ) {
+  for (unsigned int i = 0; i < state->num_rows; i ++ ) {
+    for(unsigned int j = 0; j < strlen(state->board[i]); j ++ ) {
       if(is_tail(state->board[i][j])) {
         tail_rows[snake_num] = i;
         tail_cols[snake_num] = j;
@@ -450,7 +441,7 @@ game_state_t* initialize_snakes(game_state_t* state) {
   state->snakes = snakes;
   state->num_snakes = snake_num;
 
-  for(int i = 0; i < snake_num; i ++ ) {
+  for(unsigned int i = 0; i < snake_num; i ++ ) {
     snakes[i].tail_row = tail_rows[i];
     snakes[i].tail_col = tail_cols[i];
     snakes[i].live = 1;
