@@ -378,7 +378,7 @@ game_state_t* load_board(char* filename) {
   game_state->num_rows = cnt - 1;
   game_state->board = malloc(sizeof(char*) * game_state->num_rows);
 
-  for(int i = 0; i < cnt; i ++ ) {
+  for(int i = 0; i < game_state -> num_rows; i ++ ) {
     buff = malloc(1024 * 1024 * sizeof(char));
     fgets(buff, 1024 * 1024, fp);
     game_state->board[i] = malloc((strlen(buff)) * sizeof(char));
