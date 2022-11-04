@@ -54,7 +54,7 @@ void free_state(game_state_t* state) {
   for (int i = 0; i < state->num_rows; i ++ ) {
     free(state->board[i]);
   }
-  // free(state->board);
+  free(state->board);
   free(state->snakes);
   free(state);
   return;
@@ -371,6 +371,8 @@ game_state_t* load_board(char* filename) {
     fgets(buff, 1024 * 1024, fp);
 	  cnt ++ ;
 	}
+  fclose(fp);
+  free(buff);
 
   fp = fopen(filename, "r");
   game_state->num_rows = cnt - 1;
@@ -384,6 +386,7 @@ game_state_t* load_board(char* filename) {
     game_state->board[i][strlen(buff) - 1] = '\0';
     free(buff);
   }
+  fclose(fp);
 
   return game_state;
 }
