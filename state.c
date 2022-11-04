@@ -54,7 +54,7 @@ void free_state(game_state_t* state) {
   for (int i = 0; i < state->num_rows; i ++ ) {
     free(state->board[i]);
   }
-  free(state->board);
+  // free(state->board);
   free(state->snakes);
   free(state);
   return;
@@ -391,6 +391,7 @@ game_state_t* load_board(char* filename) {
     game_state->board[i] = malloc((strlen(buff)) * sizeof(char));
     strcpy(game_state->board[i], buff);
     game_state->board[i][strlen(buff) - 1] = '\0';
+    free(buff);
   }
 
   return game_state;
